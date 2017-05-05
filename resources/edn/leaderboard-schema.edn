@@ -1,0 +1,40 @@
+{:objects {
+           :Game {:description "A game owned by a developer for which scores can be recorded"
+                  :fields {:key {:type (non-null String)
+                                 :description "Unique identifier for this game"}
+                           :name {:type (non-null String)}
+                           :created {:type Int
+                                     :description "Unix epoch seconds when game was added to database"}}}
+           :Score  {:description "Score that is entered for name"
+                    :fields {:id {:type (non-null ID)}
+                             :name {:type (non-null String)}
+                             :game_key {:type (non-null String)}
+                             :score {:type (non-null String)}
+                             :created {:type Int
+                                       :description "Unix epch seconds when score was added to database"}}}}
+ :queries {:game {:type :Game
+                  :description "Retrieve a single Game by its name"
+                  :args {:name {:type (non-null String)
+                                :description "Unique name for game."}}
+                  :resolve :resolve-game}
+           :games {:type (list :Game)
+                   :description "Retrieve all of a developers Games"
+                   :resolve :resolve-games}}
+ :mutations {:game {:type :Game
+                    :description "Create a new Game"
+                    :args {:name {:type (non-null String)
+                                  :description "Unique name for game."}}
+                    :resolve :resolve-create-game!
+                    }
+             :score {:type :Score
+                     :description "Create a new Score entry"
+                     :args {:name {:type (non-null String)
+                                   :description "Name of individual associated with this score."}
+                            :game_key {:type (non-null String)
+                                       :description "Key associated with the game for which the score is being entered"}
+                            :score {:type (non-null String)
+                                    :description "JSON string representing the score.\n\n ex:\n\n {\"points\": 100}\n\n{\"level\":1, \"points\":100}\n\n{\"level\":1, \"points\":100, \"time\": 160}"}
+                            }
+                     :resolve :resolve-create-score!}}}
+
+

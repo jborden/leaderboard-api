@@ -1,0 +1,3 @@
+#!/bin/bash
+
+psql -U leaderboard -d leaderboard -f resources/sql/tables.sql

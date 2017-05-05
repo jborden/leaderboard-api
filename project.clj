@@ -1,13 +1,14 @@
 (defproject leaderboard-api "0.1.0-SNAPSHOT"
-  :description "FIXME: write description"
-  :url "http://example.com/FIXME"
+  :description "A leaderboard API service for games"
+  :url "http://github.com/jborden/leaderboard-api"
   :min-lein-version "2.0.0"
   :dependencies [[org.clojure/clojure "1.8.0"]
+                 [org.clojure/data.json "0.2.6"]
                  [org.postgresql/postgresql "9.4-1201-jdbc41"]
-                 [compojure "1.5.2"]
-                 [ring/ring-defaults "0.2.1"]
                  [yesql "0.5.3"]
-                 [buddy/buddy-core "1.2.0"]]
+                 [com.walmartlabs/lacinia "0.15.0"]
+                 [ring/ring-core "1.6.0"]
+                 [ring/ring-json "0.4.0"]]
   :plugins [[lein-ring "0.11.0"]]
   :ring {:handler leaderboard-api.handler/app}
   :profiles
