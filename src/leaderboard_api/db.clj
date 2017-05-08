@@ -38,9 +38,4 @@
 ;;https://blog.codeship.com/unleash-the-power-of-storing-json-in-postgres/
 (defn resolve-create-score!
   [context args _value]
-  (println "------------------------------\n\n")
-  (println "---")
-  (println "args" (clojure.pprint/pprint args))
-  (println (type (:score args)))
-  (println "args score" (clojure.pprint/pprint (:score args)))
   (create-score<! args))

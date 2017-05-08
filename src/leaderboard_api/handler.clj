@@ -3,6 +3,7 @@
             [clojure.string :as string]
             [com.walmartlabs.lacinia :refer [execute]]
             [leaderboard-api.schema :refer [leaderboard-schema]]
+            [ring.middleware.cors :refer [wrap-cors]]
             [ring.middleware.json :refer [wrap-json-response wrap-json-params wrap-json-body]]
             [ring.middleware.params :refer [wrap-params]]
             [ring.util.request :refer [body-string]]))
@@ -105,4 +106,6 @@
 (def app
   (-> handler
       wrap-params
+      (wrap-cors :access-control-allow-origin [#".*"]
+                 :access-control-allow-methods [:get :post])
       wrap-body-string))
