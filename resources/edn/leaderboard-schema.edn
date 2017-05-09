@@ -19,7 +19,23 @@
                   :resolve :resolve-game}
            :games {:type (list :Game)
                    :description "Retrieve all of a developers Games"
-                   :resolve :resolve-games}}
+                   :resolve :resolve-games}
+           :recentScores {:type (list :Score)
+                          :description "Retrieve the most recently submitted game scores"
+                          :args {:game_key {:type (non-null String)
+                                            :description "Unique game key for game"}
+                                 :last {:type Int
+                                        :description "Retrieve the n most recently submitted scores. Maximum allowed is 100"}}
+                          :resolve :resolve-recent-scores}
+           :topScores {:type (list :Score)
+                       :description "Retrieve the top scores for <keyword> where <keyword is a member of the JSON score object"
+                       :args {:game_key {:type (non-null String)
+                                         :description "Unique game key for game"}
+                              :last {:type Int
+                                     :description "Retrieve the top n scores. Maximum allowed is 100"}
+                              :keyword {:type (non-null String)
+                                        :description "Keyword to return the top n scores for"}}
+                       :resolve :resolve-top-scores}}
  :mutations {:game {:type :Game
                     :description "Create a new Game"
                     :args {:name {:type (non-null String)
@@ -36,5 +52,3 @@
                                     :description "JSON string representing the score.\n\n ex:\n\n {\"points\": 100}\n\n{\"level\":1, \"points\":100}\n\n{\"level\":1, \"points\":100, \"time\": 160}"}
                             }
                      :resolve :resolve-create-score!}}}
-
-

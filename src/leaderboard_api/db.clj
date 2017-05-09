@@ -39,3 +39,20 @@
 (defn resolve-create-score!
   [context args _value]
   (create-score<! args))
+
+(defn resolve-recent-scores
+  [context {:keys [game_key last]} _value]
+  (let [last (if (> last 100)
+               100
+               last)]
+    (get-recent-scores {:game_key game_key
+                        :last last})))
+
+(defn resolve-top-scores
+  [context {:keys [game_key last keyword]} _value]
+  (let [last (if (> last 100)
+               100
+               last)]
+    (get-top-scores {:game_key game_key
+                     :last last
+                     :keyword keyword})))

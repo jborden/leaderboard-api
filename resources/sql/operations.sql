@@ -12,3 +12,7 @@ SELECT key,name,created FROM games WHERE developer = :developer;
 INSERT INTO scores (score,name,game_key) VALUES (cast(:score as jsonb),:name,:game_key);
 -- name: get-score
 SELECT name,game_key,cast(score as varchar),created FROM scores WHERE name = :name;
+-- name: get-recent-scores
+SELECT score,created,name,game_key,id FROM scores WHERE game_key = :game_key ORDER BY id DESC LIMIT :last;
+-- name: get-top-scores
+SELECT score,created,name,game_key,id FROM scores WHERE score->>:keyword IS NOT NULL AND game_key=:game_key ORDER by score->>:keyword DESC,id LIMIT 10;
