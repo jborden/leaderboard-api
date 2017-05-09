@@ -6,7 +6,7 @@
                            :created {:type Int
                                      :description "Unix epoch seconds when game was added to database"}}}
            :Score  {:description "Score that is entered for name"
-                    :fields {:id {:type (non-null ID)}
+                    :fields {:id {:type Int}
                              :name {:type (non-null String)}
                              :game_key {:type (non-null String)}
                              :score {:type (non-null String)}
@@ -25,14 +25,16 @@
                           :args {:game_key {:type (non-null String)
                                             :description "Unique game key for game"}
                                  :last {:type Int
-                                        :description "Retrieve the n most recently submitted scores. Maximum allowed is 100"}}
+                                        :description "Retrieve the n most recently submitted scores. Default is 5, max is 100"
+                                        :default-value 5}}
                           :resolve :resolve-recent-scores}
            :topScores {:type (list :Score)
                        :description "Retrieve the top scores for <keyword> where <keyword is a member of the JSON score object"
                        :args {:game_key {:type (non-null String)
                                          :description "Unique game key for game"}
                               :last {:type Int
-                                     :description "Retrieve the top n scores. Maximum allowed is 100"}
+                                     :description "Retrieve the top n scores. Default is 5, max is 100"
+                                     :default-value 5}
                               :keyword {:type (non-null String)
                                         :description "Keyword to return the top n scores for"}}
                        :resolve :resolve-top-scores}}

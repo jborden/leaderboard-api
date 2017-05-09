@@ -15,4 +15,4 @@ SELECT name,game_key,cast(score as varchar),created FROM scores WHERE name = :na
 -- name: get-recent-scores
 SELECT score,created,name,game_key,id FROM scores WHERE game_key = :game_key ORDER BY id DESC LIMIT :last;
 -- name: get-top-scores
-SELECT score,created,name,game_key,id FROM scores WHERE score->>:keyword IS NOT NULL AND game_key=:game_key ORDER by score->>:keyword DESC,id LIMIT 10;
+SELECT score,created,name,game_key,id FROM scores WHERE score->>:keyword IS NOT NULL AND game_key=:game_key ORDER by cast(score->>:keyword as integer) DESC,id LIMIT :last;
