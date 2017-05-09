@@ -1,5 +1,6 @@
 (ns leaderboard-api.db
   (:require [clojure.data.json :as json]
+            [environ.core :refer [env]]
             [leaderboard-api.core :as core]
             [yesql.core :refer [defquery defqueries]]))
 
@@ -7,8 +8,18 @@
 ;; need to be sure the database is password protected!
 (def db-spec {:classname "org.postgresql.Driver"
               :subprotocol "postgresql"
-              :subname "//localhost:5432/leaderboard"
-              :user "leaderboard"})
+              :subname (str "//"
+                            (or (:db-host env)
+                                (System/getProperty "OPENSHIFT_POSTGRESQL_DB_HOST"))
+                            ":"
+                            (or (:db-port env)
+                                (System/getProperty "OPENSHIFT_POSTGRESQL_DB_PORT"))
+                            "/"
+                            "leaderboard")
+              :user (or (:db-username env)
+                        (System/getProperty "OPENSHIFT_POSTGRESQL_DB_USERNAME"))
+              :password (or (:db-password env)
+                            (System/getProperty "OPENSHIFT_POSTGRESQL_DB_PASSWORD"))})
 
 (defqueries "sql/operations.sql"
   {:connection db-spec})
