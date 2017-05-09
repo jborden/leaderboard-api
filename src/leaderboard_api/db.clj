@@ -10,16 +10,19 @@
               :subprotocol "postgresql"
               :subname (str "//"
                             (or (:db-host env)
-                                (System/getProperty "OPENSHIFT_POSTGRESQL_DB_HOST"))
+                                (System/getProperty "OPENSHIFT_PG_HOST"))
                             ":"
                             (or (:db-port env)
-                                (System/getProperty "OPENSHIFT_POSTGRESQL_DB_PORT"))
+                                (System/getProperty "OPENSHIFT_PG_PORT"))
                             "/"
+                            (or (:db-name env)
+                                (System/getProperty "OPENSHIFT_PG_DATABASE")
+                                )
                             "leaderboard")
               :user (or (:db-username env)
-                        (System/getProperty "OPENSHIFT_POSTGRESQL_DB_USERNAME"))
+                        (System/getProperty "OPENSHIFT_PG_USERNAME"))
               :password (or (:db-password env)
-                            (System/getProperty "OPENSHIFT_POSTGRESQL_DB_PASSWORD"))})
+                            (System/getProperty "OPENSHIFT_PG_PASSWORD"))})
 
 (defqueries "sql/operations.sql"
   {:connection db-spec})

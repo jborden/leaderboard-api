@@ -1,0 +1,10 @@
+#!/bin/bash
+echo "Creating uberwar..."
+lein ring uberwar
+echo "Copying ROOT.war to openshift dir"
+cp target/leaderboard-api-0.1.0-SNAPSHOT-standalone.war ~/openshift/leaderboard/webapps/ROOT.war
+echo "Deploying to openshift"
+cd ~/openshift/leaderboard/
+git add webapps/ROOT.war
+git commit -m "updating on $(date +'%Y-%m-%d-%H:%M.%S')"
+git push
