@@ -16,9 +16,7 @@
                                 (System/getenv "OPENSHIFT_PG_PORT"))
                             "/"
                             (or (:db-name env)
-                                (System/getenv "OPENSHIFT_PG_DATABASE")
-                                )
-                            "leaderboard")
+                                (System/getenv "OPENSHIFT_PG_DATABASE")))
               :user (or (:db-username env)
                         (System/getenv "OPENSHIFT_PG_USERNAME"))
               :password (or (:db-password env)
