@@ -1,6 +1,6 @@
 # leaderboard-api
 
-FIXME
+A leaderboard API service for games
 
 ## Prerequisites
 
