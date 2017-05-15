@@ -4,7 +4,6 @@
             [com.walmartlabs.lacinia :refer [execute]]
             [leaderboard-api.schema :refer [leaderboard-schema]]
             [ring.middleware.cors :refer [wrap-cors]]
-            [ring.middleware.json :refer [wrap-json-response wrap-json-params wrap-json-body]]
             [ring.middleware.params :refer [wrap-params]]
             [ring.util.request :refer [body-string]]))
 
@@ -18,9 +17,9 @@
   [request]
   (let [variables (condp = (:request-method request)
                     ;; We do a little bit more error handling here in the case
-                    ;; where the client gives us non-valid json. We still haven't
+                    ;; where the client gives us non-valid JSON. We still haven't
                     ;; handed over the values of the request object to lacinia
-                    ;; GraphQL so we are still responsibile for minimal error
+                    ;; GraphQL so we are still responsible for minimal error
                     ;; handling
                     :get (try (-> request
                                   (get-in [:query-params "variables"])
@@ -92,7 +91,7 @@
       ;; not serving any other requests
       {:status 404
        :headers {"Content-Type" "text/html"}
-       :body (str "only requests to /graphql are accepted on this server")})))
+       :body (str "Only GraphQL JSON requests to /graphql are accepted on this server")})))
 
 ;; from: http://stackoverflow.com/questions/37397531/ring-read-body-of-a-http-request-as-string
 ;; this is needed to deal with the fact that body-string can only be called once because it consumes

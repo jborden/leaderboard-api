@@ -9,7 +9,6 @@
                  [yesql "0.5.3"]
                  [com.walmartlabs/lacinia "0.15.0"]
                  [ring/ring-core "1.6.0"]
-                 [ring/ring-json "0.4.0"]
                  [ring-cors "0.1.10"]]
   :plugins [[lein-ring "0.11.0"]
             [lein-environ "1.1.0"]]

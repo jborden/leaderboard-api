@@ -1,12 +1,10 @@
 (ns leaderboard-api.schema
   (:require
    [leaderboard-api.db :as db]
-   [cheshire.core :refer [generate-string parse-string]]
    [clojure.java.io :as io]
    [clojure.edn :as edn]
    [com.walmartlabs.lacinia.schema :as schema]
-   [com.walmartlabs.lacinia.util :refer [attach-resolvers]]
-   [com.walmartlabs.lacinia :refer [execute]]))
+   [com.walmartlabs.lacinia.util :refer [attach-resolvers]]))
 
 (defn leaderboard-schema
   []

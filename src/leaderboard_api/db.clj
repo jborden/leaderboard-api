@@ -2,7 +2,7 @@
   (:require [clojure.data.json :as json]
             [environ.core :refer [env]]
             [leaderboard-api.core :as core]
-            [yesql.core :refer [defquery defqueries]]))
+            [yesql.core :refer [defqueries]]))
 
 ;; still need to put a password in for this
 ;; need to be sure the database is password protected!
@@ -27,7 +27,7 @@
 
 ;; see: https://gist.github.com/alexpw/2166820
 (defmacro check-error
-  "Usage: (check-error (create-developer! (core/new-developer \"jmborden@gmail.com\")))"
+  "Usage: (check-error (create-developer! (core/new-developer \"foo@bar.com\")))"
   [body]
   `(try ~body (catch Exception e# (throw (Exception.(:cause (Throwable->map (.getNextException e#))))))))
 
