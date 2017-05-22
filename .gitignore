@@ -7,3 +7,6 @@
 .nrepl-port
 \target
 profiles.clj
+.lein-failures
+test/jmeter/*.jtl
+test/jmeter/*.log
