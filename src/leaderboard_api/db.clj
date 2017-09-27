@@ -2,7 +2,10 @@
   (:require [clojure.data.json :as json]
             [environ.core :refer [env]]
             [leaderboard-api.core :as core]
-            [yesql.core :refer [defqueries]]))
+            [yesql.core :refer [defqueries]]
+            [clojure.string :as s]))
+
+(def database-url (System/getenv "DATABASE_URL"))
 
 ;; still need to put a password in for this
 ;; need to be sure the database is password protected!
@@ -10,17 +13,17 @@
               :subprotocol "postgresql"
               :subname (str "//"
                             (or (:db-host env)
-                                (System/getenv "OPENSHIFT_PG_HOST"))
+                                (-> (s/split database-url #":") (nth 2) (s/split #"@") second))
                             ":"
                             (or (:db-port env)
-                                (System/getenv "OPENSHIFT_PG_PORT"))
+                                (-> (s/split database-url #":") (nth 3) (s/split #"/") first))
                             "/"
                             (or (:db-name env)
-                                (System/getenv "OPENSHIFT_PG_DATABASE")))
+                                (-> (s/split database-url #":") (nth 3) (s/split #"/") second)))
               :user (or (:db-username env)
-                        (System/getenv "OPENSHIFT_PG_USERNAME"))
+                        (-> (s/split database-url #":") second (s/split #"//") second))
               :password (or (:db-password env)
-                            (System/getenv "OPENSHIFT_PG_PASSWORD"))})
+                            (-> (s/split database-url #":") (nth 2) (s/split #"@") first))})
 
 (defqueries "sql/operations.sql"
   {:connection db-spec})
