@@ -5,25 +5,23 @@
             [yesql.core :refer [defqueries]]
             [clojure.string :as s]))
 
-(def database-url (System/getenv "DATABASE_URL"))
-
 ;; still need to put a password in for this
 ;; need to be sure the database is password protected!
 (def db-spec {:classname "org.postgresql.Driver"
               :subprotocol "postgresql"
               :subname (str "//"
                             (or (:db-host env)
-                                (-> (s/split database-url #":") (nth 2) (s/split #"@") second))
+                                (-> (s/split (System/getenv "DATABASE_URL") #":") (nth 2) (s/split #"@") second))
                             ":"
                             (or (:db-port env)
-                                (-> (s/split database-url #":") (nth 3) (s/split #"/") first))
+                                (-> (s/split (System/getenv "DATABASE_URL") #":") (nth 3) (s/split #"/") first))
                             "/"
                             (or (:db-name env)
-                                (-> (s/split database-url #":") (nth 3) (s/split #"/") second)))
+                                (-> (s/split (System/getenv "DATABASE_URL") #":") (nth 3) (s/split #"/") second)))
               :user (or (:db-username env)
-                        (-> (s/split database-url #":") second (s/split #"//") second))
+                        (-> (s/split (System/getenv "DATABASE_URL") #":") second (s/split #"//") second))
               :password (or (:db-password env)
-                            (-> (s/split database-url #":") (nth 2) (s/split #"@") first))})
+                            (-> (s/split (System/getenv "DATABASE_URL") #":") (nth 2) (s/split #"@") first))})
 
 (defqueries "sql/operations.sql"
   {:connection db-spec})
